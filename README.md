@@ -6,19 +6,43 @@ A handler for scrolling inside elements with different eases
 
 ```js
 var ScrollManager = require('scroll-manager');
-
 this.scoller = new ScrollManager();
+var options = {
+	element: <some element>,
+	offsetToScroll: <offset>,
+	duration: <duration>,
+	ease: <ease>
+}
 
-this.scoller.scrollTo(element, offsetToScroll, duration, ease(optional));
-
-//Examples
-
-this.scoller.scrollTo(document.body, 0, 0.6);
-
-this.scoller.scrollTo(document.body, 0, 0.6, 'easeOutCubic');
+this.scoller.scrollTo(options, callback);
 ```
 
-## Available Eases
+##Examples
+###ScrollTo
+```js
+//This scroll the element to the offsetToScroll in the required duration with the default ease
+this.scoller.scrollTo({element: document.body, to: 100, duration: 0.6});
+
+//This scroll the element to the offsetToScroll in the required duration with the selected ease and finally execute the callback
+this.scoller.scrollTo({element: document.body, to: 100, duration: 0.6, ease: 'easeOutCubic'}, callback);
+
+```
+###ScrollTop
+
+```js
+
+//This scroll the element to the top in the required duration with the selected ease and finally execute the callback
+this.scoller.scrollTop({element: document.body, duration: 0.6, ease: 'easeOutCubic'}, callback);
+
+```
+###ScrollBottom
+
+```js
+//This scroll the element to the bottom in the required duration with the default ease
+this.scoller.scrollBottom({element: document.body, duration: 0.6});
+
+```
+### Available Eases
 'easeLinear'  
 'easeInQuad'  
 'easeOutQuad'  

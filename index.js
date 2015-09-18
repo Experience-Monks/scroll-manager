@@ -5,7 +5,35 @@ function ScrollManager() {
     return new ScrollManager(inc);
 }
 
-ScrollManager.prototype.scrollTo = function(element, to, duration, ease) {
+ScrollManager.prototype.scrollTop = function(options, callback) {
+
+    var element = options.element,
+    duration = options.duration,
+    ease = options.ease;
+
+    this.scrollTo({element: element, duration: duration, to: 0, ease: ease}, callback);
+
+};
+
+ScrollManager.prototype.scrollBottom = function(options, callback) {
+
+    var element = options.element,
+    duration = options.duration,
+    ease = options.ease;
+
+    var height = parseInt(window.getComputedStyle(element).height);
+
+    this.scrollTo({element: element, duration: duration, to: height, ease: ease}, callback);
+
+};
+
+ScrollManager.prototype.scrollTo = function(options, callback) {
+
+    var element = options.element,
+    to = options.to,
+    duration = options.duration,
+    ease = options.ease;
+
     var start = element.scrollTop,
     change = to - start;
     var startTime = new Date();
@@ -13,7 +41,7 @@ ScrollManager.prototype.scrollTo = function(element, to, duration, ease) {
     if(!ease)
       console.warn('[scroll-manager]: No ease defined, animation is going to run with linear ease');
 
-    var animateScroll = function(elapsedTime) {
+    var animate = function(elapsedTime) {
         var currentTime = new Date();
         elapsedTime = (currentTime.getTime() - startTime.getTime())/1000;
         var position;
@@ -46,14 +74,15 @@ ScrollManager.prototype.scrollTo = function(element, to, duration, ease) {
         element.scrollTop = position; 
         if (elapsedTime < duration) {
             setTimeout(function() {
-                animateScroll(elapsedTime);
-            }, this.increment);
+                animate(elapsedTime);
+            }, null);
+        }else{
+          if(callback) callback();
         }
     }.bind(this);
     
-    animateScroll(0);
+    animate(0);
 };
-
 
 var easeLinear = function (currentTime, start, change, duration) {
   return change * currentTime/duration + start;
