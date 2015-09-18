@@ -18,7 +18,7 @@ ScrollManager.prototype.scrollTo = function(element, to, duration, ease) {
         elapsedTime = (currentTime.getTime() - startTime.getTime())/1000;
         var position;
         switch(ease){
-          case 'linearTween':
+          case 'easeLinear':
             position = easeLinear(elapsedTime, start, change, duration); 
             break;
           case 'easeInQuad': 
