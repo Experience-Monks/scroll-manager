@@ -1,0 +1,19 @@
+{
+  "name": "scroll-manager",
+  "version": "1.0.0",
+  "description": "A handler for scrolling inside elements with different eases",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Scroll",
+    "Animate",
+    "Ease"
+  ],
+  "author": {
+    "name": "Máximo Belén",
+    "email": "maximobelen@me.com"
+  },
+  "license": "ISC"
+}
