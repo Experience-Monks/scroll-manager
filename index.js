@@ -2,7 +2,7 @@ module.exports = ScrollManager;
 
 function ScrollManager() {
   if (!(this instanceof ScrollManager)) 
-    return new ScrollManager(inc);
+    return new ScrollManager();
 }
 
 ScrollManager.prototype.scrollTop = function(options, callback) {
