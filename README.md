@@ -17,8 +17,9 @@ var options = {
 this.scoller.scrollTo(options, callback);
 ```
 
-##Examples
-###ScrollTo
+##Examples  
+###ScrollTo  
+
 ```js
 //This scroll the element to the offsetToScroll in the required duration with the default ease
 this.scoller.scrollTo({element: document.body, to: 100, duration: 0.6});
@@ -27,7 +28,7 @@ this.scoller.scrollTo({element: document.body, to: 100, duration: 0.6});
 this.scoller.scrollTo({element: document.body, to: 100, duration: 0.6, ease: 'easeOutCubic'}, callback);
 
 ```
-###ScrollTop
+###ScrollTop  
 
 ```js
 
@@ -35,14 +36,14 @@ this.scoller.scrollTo({element: document.body, to: 100, duration: 0.6, ease: 'ea
 this.scoller.scrollTop({element: document.body, duration: 0.6, ease: 'easeOutCubic'}, callback);
 
 ```
-###ScrollBottom
+###ScrollBottom  
 
 ```js
 //This scroll the element to the bottom in the required duration with the default ease
 this.scoller.scrollBottom({element: document.body, duration: 0.6});
 
 ```
-### Available Eases
+### Available Eases  
 'easeLinear'  
 'easeInQuad'  
 'easeOutQuad'  
