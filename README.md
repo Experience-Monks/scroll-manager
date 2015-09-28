@@ -43,6 +43,15 @@ this.scoller.scrollTop({element: document.body, duration: 0.6, ease: 'easeOutCub
 this.scoller.scrollBottom({element: document.body, duration: 0.6});
 
 ```
+###ScrollBottom  
+
+```js
+//If you want to scroll with the same velocity without taking into acount the distance you can use:
+this.scoller.scrollEqual({element: document.body, velocity: 100, to: 100, ease: 'easeOutCubic'});  
+//This is useful if you want the user feel the difference between short and long distances.
+
+```
+
 ### Available Eases  
 'easeLinear'  
 'easeInQuad'  

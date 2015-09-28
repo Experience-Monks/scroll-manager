@@ -27,6 +27,19 @@ ScrollManager.prototype.scrollBottom = function(options, callback) {
 
 };
 
+ScrollManager.prototype.scrollEqual = function(options, callback) {
+
+    var element = options.element,
+    velocity = options.velocity,
+    to = options.to,
+    ease = options.ease;
+
+    var duration = to/velocity;
+
+    this.scrollTo({element: element, duration: duration, to: to, ease: ease}, callback);
+
+};
+
 ScrollManager.prototype.scrollTo = function(options, callback) {
 
     var element = options.element,
