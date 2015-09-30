@@ -21,5 +21,6 @@
     "name": "Máximo Belén",
     "email": "maximobelen@me.com"
   },
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {}
 }
