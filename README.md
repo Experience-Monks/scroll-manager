@@ -60,6 +60,12 @@ this.scoller.scrollEqual({element: document.body, velocity: 100, to: 100, ease: 
 'easeInCubic'  
 'easeOutCubic'  
 'easeInOutCubic'  
+'easeInExpo'  
+'easeOutExpo'  
+'easeInOutExpo'  
+'easeInCirc'  
+'easeOutCirc'  
+'easeInOutCirc'  
 
 Note: If you dont choose any ease, easeLinear is going to be run.
 
