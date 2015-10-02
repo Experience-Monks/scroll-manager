@@ -1,6 +1,6 @@
 {
   "name": "scroll-manager",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "A handler for scrolling inside elements with different eases",
   "main": "index.js",
   "scripts": {
