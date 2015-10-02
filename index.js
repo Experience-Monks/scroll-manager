@@ -1,126 +1,11 @@
-module.exports = ScrollManager;
-
+var raf = require('raf');
+var id = 0;
 function ScrollManager () {
   'use strict';
   if (!(this instanceof ScrollManager)){
     return new ScrollManager();
   }
 }
-
-ScrollManager.prototype.scrollTop = function (options, callback) {
-    'use strict';
-    var element = options.element,
-    duration = options.duration,
-    ease = options.ease;
-
-    this.scrollTo({element: element, duration: duration, to: 0, ease: ease}, callback);
-
-};
-
-ScrollManager.prototype.scrollBottom = function (options, callback) {
-    'use strict';
-    var element = options.element,
-    duration = options.duration,
-    ease = options.ease;
-
-    var height = parseInt(window.getComputedStyle(element).height);
-
-    this.scrollTo({element: element, duration: duration, to: height, ease: ease}, callback);
-
-};
-
-ScrollManager.prototype.scrollEqual = function(options, callback) {
-
-    var element = options.element,
-    velocity = options.velocity,
-    to = options.to,
-    ease = options.ease,
-    from = element.scrollTop;
-
-    var duration = Math.abs(to - from) / velocity;
-
-    this.scrollTo({element: element, duration: duration, to: to, ease: ease}, callback);
-
-};
-
-ScrollManager.prototype.scrollTo = function (options, callback) {
-    'use strict';
-    var element = options.element,
-    to = options.to,
-    duration = options.duration,
-    ease = options.ease;
-
-    var start = element.scrollTop,
-    change = to - start;
-    var startTime = new Date();
-
-    if (!ease) {
-      console.warn('[scroll-manager]: No ease defined, animation is going to run with linear ease');
-    }
-
-    var animate = function (elapsedTime) {
-        var currentTime = new Date();
-        elapsedTime = (currentTime.getTime() - startTime.getTime()) / 1000;
-        var position;
-        switch (ease) {
-          case 'easeLinear':
-            position = easeLinear(elapsedTime, start, change, duration); 
-            break;
-          case 'easeInQuad': 
-            position = easeInQuad(elapsedTime, start, change, duration);
-            break;
-          case 'easeOutQuad': 
-            position = easeOutQuad(elapsedTime, start, change, duration);
-            break;
-          case 'easeInOutQuad': 
-            position = easeInOutQuad(elapsedTime, start, change, duration);
-            break;
-          case 'easeInCubic': 
-            position = easeInCubic(elapsedTime, start, change, duration);
-            break;
-          case 'easeOutCubic': 
-            position = easeOutCubic(elapsedTime, start, change, duration);
-            break;
-          case 'easeInOutCubic': 
-            position = easeInOutCubic(elapsedTime, start, change, duration);
-            break;
-          case 'easeInExpo': 
-            position = easeInExpo(elapsedTime, start, change, duration);
-            break;
-          case 'easeOutExpo': 
-            position = easeOutExpo(elapsedTime, start, change, duration);
-            break;
-          case 'easeInOutExpo': 
-            position = easeInOutExpo(elapsedTime, start, change, duration);
-            break;
-          case 'easeInCirc': 
-            position = easeInCirc(elapsedTime, start, change, duration);
-            break;
-          case 'easeOutCirc': 
-            position = easeOutCirc(elapsedTime, start, change, duration);
-            break;
-          case 'easeInOutCirc': 
-            position = easeInOutCirc(elapsedTime, start, change, duration);
-            break;
-          default:
-            position = easeLinear(elapsedTime, start, change, duration);
-            break;
-        }
-
-        element.scrollTop = position; 
-        if (elapsedTime < duration) {
-            setTimeout(function() {
-                animate(elapsedTime);
-            }, null);
-        } else {
-          if (callback) {
-            callback();
-          } 
-        }
-    }.bind(this);
-    
-    animate(0);
-};
 
 var easeLinear = function (currentTime, start, change, duration) {
   'use strict';
@@ -187,19 +72,131 @@ var easeInOutExpo = function (currentTime, start, change, duration) {
 };
 
 var easeInCirc = function (currentTime, start, change, duration) {
+  'use strict';
   currentTime /= duration;
   return -change * (Math.sqrt(1 - currentTime * currentTime) - 1) + start;
 };
 
 var easeOutCirc = function (currentTime, start, change, duration) {
+  'use strict';
   currentTime /= duration;
   currentTime--;
   return change * Math.sqrt(1 - currentTime * currentTime) + start;
 };
 
 var easeInOutCirc = function (currentTime, start, change, duration) {
+  'use strict';
   currentTime /= duration/2;
   if (currentTime < 1) return -change/2 * (Math.sqrt(1 - currentTime * currentTime) - 1) + start;
   currentTime -= 2;
   return change/2 * (Math.sqrt(1 - currentTime * currentTime) + 1) + start;
 };
+
+var selectEase = function(ease){
+  'use strict';
+  switch (ease) {
+    case 'easeLinear':
+      return easeLinear; 
+    case 'easeInQuad': 
+      return easeInQuad;
+    case 'easeOutQuad': 
+      return easeOutQuad;
+    case 'easeInOutQuad': 
+      return easeInOutQuad;
+    case 'easeInCubic': 
+      return easeInCubic;
+    case 'easeOutCubic': 
+      return easeOutCubic;
+    case 'easeInOutCubic': 
+      return easeInOutCubic;
+    case 'easeInExpo': 
+      return easeInExpo;
+    case 'easeOutExpo': 
+      return easeOutExpo;
+    case 'easeInOutExpo': 
+      return easeInOutExpo;
+    case 'easeInCirc': 
+      return easeInCirc;
+    case 'easeOutCirc': 
+      return easeOutCirc;
+    case 'easeInOutCirc': 
+      return easeInOutCirc;
+    default:
+      return easeLinear;
+  }
+};
+
+ScrollManager.prototype.scrollTop = function (options, callback) {
+    'use strict';
+    var element = options.element,
+    duration = options.duration,
+    ease = options.ease;
+
+    this.scrollTo({element: element, duration: duration, to: 0, ease: ease}, callback);
+
+};
+
+ScrollManager.prototype.scrollBottom = function (options, callback) {
+    'use strict';
+    var element = options.element,
+    duration = options.duration,
+    ease = options.ease;
+
+    var height = parseInt(window.getComputedStyle(element).height);
+
+    this.scrollTo({element: element, duration: duration, to: height, ease: ease}, callback);
+
+};
+
+ScrollManager.prototype.scrollEqual = function(options, callback) {
+    'use strict';
+    var element = options.element,
+    velocity = options.velocity,
+    to = options.to,
+    ease = options.ease,
+    from = element.scrollTop;
+
+    var duration = Math.abs(to - from) / velocity;
+
+    this.scrollTo({element: element, duration: duration, to: to, ease: ease}, callback);
+
+};
+
+ScrollManager.prototype.scrollTo = function (options, callback) {
+    'use strict';
+    var element = options.element,
+    to = options.to,
+    duration = options.duration,
+    ease = options.ease;
+
+    var start = element.scrollTop,
+    change = to - start;
+    var startTime = new Date();
+
+    if (!ease) {
+      console.warn('[scroll-manager]: No ease defined, animation is going to run with linear ease');
+    }
+
+    var easeFunction = selectEase(ease);
+    var elapsedTime = 0;
+
+    var animate = function () {
+      'use strict';
+      var currentTime = new Date();
+      elapsedTime = (currentTime.getTime() - startTime.getTime()) / 1000;
+      var position = easeFunction(elapsedTime, start, change, duration);
+      element.scrollTop = position; 
+
+      if (elapsedTime < duration) {
+        id = raf(animate);
+      } else {
+        if (callback) {
+          callback();
+        } 
+      }
+    }.bind(this);
+
+    id = raf(animate);
+};
+
+module.exports = ScrollManager;
