@@ -34,9 +34,10 @@ ScrollManager.prototype.scrollEqual = function(options, callback) {
     var element = options.element,
     velocity = options.velocity,
     to = options.to,
-    ease = options.ease;
+    ease = options.ease,
+    from = element.scrollTop;
 
-    var duration = to/velocity;
+    var duration = Math.abs(to - from) / velocity;
 
     this.scrollTo({element: element, duration: duration, to: to, ease: ease}, callback);
 
