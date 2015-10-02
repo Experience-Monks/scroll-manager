@@ -21,7 +21,7 @@
     "name": "Máximo Belén",
     "email": "maximobelen@me.com"
   },
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "raf": "^3.1.0"
   }
