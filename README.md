@@ -1,4 +1,5 @@
 # scroll-manager
+![logo](https://raw.githubusercontent.com/maximobelen/assets/master/images/scroll-manager/scroll-manager.png)  
 
 [![stable](http://badges.github.io/stability-badges/dist/stable.svg)](http://github.com/badges/stability-badges)
 
