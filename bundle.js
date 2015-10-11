@@ -40,7 +40,7 @@ module.exports = {
       'text': {
         'title':'scroll-manager',
         'summary': {
-          'start': 'scroll-manager its a module that allows you to scroll inside elements with different eases. Now its time to said welcome to scroll-manager demo or... just',
+          'start': 'scroll-manager its a module that allows you to scroll inside elements with different eases. Now its time to say welcome to scroll-manager demo or... just',
           'console': '$ npm install scroll-manager',
           'end':'and try it yourself ;)'
         }
