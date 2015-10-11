@@ -1,6 +1,5 @@
 node_modules
 *.log
 .DS_Store
-./release
-./tmp
-./node_modules
+.tmp/
+release/
