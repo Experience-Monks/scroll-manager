@@ -1,0 +1,57 @@
+#ScrollButton{
+  height: 80px;
+  width: 200px;
+  border-radius: 90px;
+  border: 2px solid #cccccc;
+  margin: 180px auto;
+  cursor: pointer;
+
+  .button-text{
+  	margin-top: 20px;
+  	text-align: center;
+  	font-size: 30px;
+  	color: #cccccc;
+  }
+
+  &:hover, 
+  &:focus, 
+  &:active {
+    -webkit-animation-name: buzz;
+    animation-name: buzz;
+    -webkit-animation-duration: 0.15s;
+    animation-duration: 0.15s;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    background-color: #ffffff;
+    .button-text{
+      color: #000000;
+    }
+  }
+  
+  @-webkit-keyframes buzz {
+      50% {
+          -ms-transform: translateX(3px) rotate(2deg);
+        -webkit-transform: translateX(3px) rotate(2deg);
+        transform: translateX(3px) rotate(2deg);
+      }
+      100% {
+        -ms-transform: translateX(-3px) rotate(-2deg);
+        -webkit-transform: translateX(-3px) rotate(-2deg);
+        transform: translateX(-3px) rotate(-2deg);
+      }
+  }
+  @keyframes buzz {
+      50% {
+        -ms-transform: translateX(3px) rotate(2deg);
+        -webkit-transform: translateX(3px) rotate(2deg);
+        transform: translateX(3px) rotate(2deg);
+      }
+      100% {
+        -ms-transform: translateX(-3px) rotate(-2deg);
+        -webkit-transform: translateX(-3px) rotate(-2deg);
+        transform: translateX(-3px) rotate(-2deg);
+      }
+  }
+}
