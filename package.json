@@ -13,7 +13,7 @@
     "bigwheel": "^2.2.1",
     "detect-dom-ready": "^1.0.2",
     "domify": "*",
-    "gsap": "^1.15.0",
+    "gsap": "^1.18.0",
     "handlebars": "^2.0.0",
     "scroll-manager": "^1.2.5"
   },
