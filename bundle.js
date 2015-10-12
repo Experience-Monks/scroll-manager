@@ -416,7 +416,7 @@ var hbs = require( 'handlebars' );
 var domify = require( 'domify' );
 var scrollManager = require('scroll-manager');
 var TweenMax = require('gsap');
-
+var framework = require( '../../framework' );
 function ScrollButton(req, done, model ) {
   this.model = model;
   this.viewName = this.model.options.viewName;
@@ -445,14 +445,18 @@ ScrollButton.prototype = {
 
   callback: function() {
     var callbackBanner = document.getElementById('callback-banner');
-    TweenMax.to(callbackBanner, 0.8,
+    TweenMax.to(callbackBanner, 0.6,
       { autoAlpha: 1, 
         ease:  Expo.easeOut,
         onComplete: function(){
-          TweenMax.to(callbackBanner, 0.8,{autoAlpha: 0, ease: Expo.easeOut});
+          this.callbackRoute(this.viewName);
+          TweenMax.to(callbackBanner, 1,{autoAlpha: 0, ease: Expo.easeOut});
         }.bind(this)
       }
     );
+  },
+  callbackRoute: function(section) {
+    framework.go(section);
   },
 
   doScroll: function(scrollType) {
@@ -468,25 +472,25 @@ ScrollButton.prototype = {
         this.options.to = offset.offsetTop;
         this.options.duration = this.model.options.duration;
         if(this.model.options.callback){
-          this.scroller.scrollTo(this.options, this.callback);
+          this.scroller.scrollTo(this.options, this.callback.bind(this));
         }else{
-          this.scroller.scrollTo(this.options);
+          this.scroller.scrollTo(this.options, this.callbackRoute(this.viewName));
         }
         break;
       case 'scrollTop':
         this.options.duration = this.model.options.duration;
         if(this.model.options.callback){
-          this.scroller.scrollTop(this.options, this.callback);
+          this.scroller.scrollTop(this.options, this.callback.bind(this));
         }else{
-          this.scroller.scrollTop(this.options);
+          this.scroller.scrollTop(this.options, this.callbackRoute(this.viewName));
         }
         break;
       case 'scrollBottom':
         this.options.duration = this.model.options.duration;
         if(this.model.options.callback){
-          this.scroller.scrollBottom(this.options, this.callback);
+          this.scroller.scrollBottom(this.options, this.callback.bind(this));
         }else{
-          this.scroller.scrollBottom(this.options);
+          this.scroller.scrollBottom(this.options, this.callbackRoute(this.viewName));
         }
         break;
       case 'scrollEqual':
@@ -494,16 +498,16 @@ ScrollButton.prototype = {
         this.options.to = offset.offsetTop;
         this.options.velocity = this.model.options.velocity;
         if(this.model.options.callback){
-          this.scroller.scrollEqual(this.options, this.callback);
+          this.scroller.scrollEqual(this.options, this.callback.bind(this));
         }else{
-          this.scroller.scrollEqual(this.options);
+          this.scroller.scrollEqual(this.options, this.callbackRoute(this.viewName));
         }
         break;
       default:
         if(this.model.options.callback){
-          this.scroller.scrollTo(this.options, this.callback);
+          this.scroller.scrollTo(this.options, this.callback.bind(this));
         }else{
-          this.scroller.scrollTo(this.options);
+          this.scroller.scrollTo(this.options, this.callbackRoute(this.viewName));
         }        
         break;
     }
@@ -537,7 +541,7 @@ ScrollButton.prototype = {
 
 module.exports = ScrollButton;
 
-},{"domify":19,"gsap":23,"handlebars":39,"scroll-manager":40}],10:[function(require,module,exports){
+},{"../../framework":2,"domify":19,"gsap":23,"handlebars":39,"scroll-manager":40}],10:[function(require,module,exports){
 (function (global){
 /** @module bigwheel */
 
