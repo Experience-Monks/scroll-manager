@@ -211,12 +211,12 @@ Landing.prototype = {
 			document.body.appendChild(this.dom);
 
 			var viewContainer = this.dom.getElementsByClassName('view-container')[0];
-			var landingView = new LandingView(req, done, model.landing.model, model.landing.title);
+			var landingView = new LandingView(model.landing.model, model.landing.title);
 			viewContainer.children.namedItem(model.landing.title).appendChild(landingView.dom);
 			
 			var example;
 			for (example in model.examples) {
-				var exampleToAdd = new Example(req, done, model.examples[example].model, model.examples[example].title);
+				var exampleToAdd = new Example(model.examples[example].model, model.examples[example].title);
 				viewContainer.children.namedItem(model.examples[example].title).appendChild(exampleToAdd.dom);
 			}
 			done();
@@ -240,7 +240,6 @@ Landing.prototype = {
 
 	destroy: function( req, done ) {
 
-		
     this.dom.parentNode.removeChild(this.dom);
 
 		done();
@@ -310,46 +309,39 @@ var hbs = require( 'handlebars' );
 var domify = require( 'domify' );
 var ScrollButton = require('../ScrollButton');
 
-function Example(req, done, model, viewName) {
+function Example(model, viewName) {
   this.model = model;
   this.viewName = viewName;
-  this.init(req, done);
+  this.init();
 }
 
 
 Example.prototype = {
 
-  init: function( req, done) {
+  init: function() {
     
     
       this.dom = domify(hbs.compile("<div id=\"Example\">\n  <h1>{{text.title}}</h1>\n  <div class=\"text-container\">\n    <span>{{text.summary}}</span>\n  </div>\n  <div class=\"source-code-container\">\n    <pre class=\"black-console\">{{text.sourceCode}}</pre>\n  </div>\n</div>")(this.model));
       document.body.appendChild(this.dom);
-      var button = new ScrollButton(req, done, this.model.button);
+      var button = new ScrollButton(this.model.button);
       this.dom.appendChild(button.container);
-      done();
   },
 
   resize: function(w,h) {
 
   },
 
-  animateIn: function( req, done ) {
-
-    done();
+  animateIn: function() {
     
   },
 
-  animateOut: function( req, done ) {
+  animateOut: function() {
 
-    done();
   },
 
-  destroy: function( req, done ) {
+  destroy: function() {
 
-    
     this.dom.parentNode.removeChild(this.dom);
-
-    done();
   }
 };
 
@@ -363,46 +355,39 @@ var hbs = require( 'handlebars' );
 var domify = require( 'domify' );
 var ScrollButton = require('../ScrollButton');
 
-function LandingView(req, done, model, viewName) {
+function LandingView(model, viewName) {
   this.model = model;
   this.viewName = viewName;
-  this.init(req, done);
+  this.init();
 }
 
 
 LandingView.prototype = {
 
-  init: function( req, done) {
+  init: function() {
     
     
       this.dom = domify(hbs.compile("<div id=\"LandingView\">\n  <h1>{{text.title}}</h1>\n  <div class=\"text-container\">\n    <span>{{text.summary.start}}</span>\n    <span class=\"console\">{{text.summary.console}}</span>\n    <span>{{text.summary.end}}</span>\n  </div>\n</div>")(this.model));
       document.body.appendChild(this.dom);
-      var button = new ScrollButton(req, done, this.model.button);
+      var button = new ScrollButton(this.model.button);
       this.dom.appendChild(button.container);
-      done();
   },
 
   resize: function(w,h) {
 
   },
 
-  animateIn: function( req, done ) {
+  animateIn: function() {
 
-    done();
-    
   },
 
-  animateOut: function( req, done ) {
+  animateOut: function() {
 
-    done();
   },
 
-  destroy: function( req, done ) {
+  destroy: function() {
 
-    
     this.dom.parentNode.removeChild(this.dom);
-
-    done();
   }
 };
 
@@ -417,24 +402,22 @@ var domify = require( 'domify' );
 var scrollManager = require('scroll-manager');
 var TweenMax = require('gsap');
 var framework = require( '../../framework' );
-function ScrollButton(req, done, model ) {
+function ScrollButton(model) {
   this.model = model;
   this.viewName = this.model.options.viewName;
-  this.init(req, done);
+  this.init();
 }
 
 
 ScrollButton.prototype = {
 
-  init: function(req, done) {
+  init: function() {
     
       this.container = domify(hbs.compile("<div id=\"ScrollButton\">\n  <p class=\"button-text\">{{title}}</p>\n</div>")(this.model));
       document.body.appendChild(this.container);
       this.scroller = new scrollManager();
 
       this.addListeners();
-      done();
-    
   },
 
   addListeners: function() {
@@ -517,25 +500,17 @@ ScrollButton.prototype = {
 
   },
 
-  animateIn: function(req, done) {
-
-    done();
+  animateIn: function() {
 
   },
 
-  animateOut: function( req, done ) {
-    
-
-    done();
+  animateOut: function() {
 
   },
 
   destroy: function() {
 
-    
     this.dom.parentNode.removeChild(this.dom);
-    done();
-
   }
 };
 
