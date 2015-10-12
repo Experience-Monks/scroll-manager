@@ -1,7 +1,7 @@
 #LandingView{
 	position: relative;
-  width: 100vmax;
-  height: 100vmin;
+  height: 100vh;
+  width: 100%;
   color: #ffffff;
   h1{
   	width: inherit;
@@ -19,6 +19,15 @@
       font-family: "Lucida Console", Monaco, monospace;
       background-color: #ffffff;
       color: #000000;
+      font-size: 20px;
+    }
+  }
+  @media (max-width: 375px) {
+    h1{
+      font-size: 32px;
+    }
+     .text-container{
+      margin: 20px auto 0;
       font-size: 20px;
     }
   }
