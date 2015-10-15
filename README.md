@@ -13,7 +13,7 @@ this.scroller = new ScrollManager();
 
 var elementTo = document.getElementById('elementID');
 var callback = function(){
-  console.log("I'm done wirh scroll stuff");
+  console.log("I'm done with scroll stuff");
 };
 
 var options = {
