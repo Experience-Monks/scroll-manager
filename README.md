@@ -9,15 +9,21 @@ A handler for scrolling inside elements with different eases
 
 ```js
 var ScrollManager = require('scroll-manager');
-this.scoller = new ScrollManager();
-var options = {
-	element: <some element>,
-	offsetToScroll: <offset>,
-	duration: <duration>,
-	ease: <ease>
-}
+this.scroller = new ScrollManager();
 
-this.scoller.scrollTo(options, callback);
+var elementTo = document.getElementById('elementID');
+var callback = function(){
+  console.log("I'm done wirh scroll stuff");
+};
+
+var options = {
+  duration: 0.8,
+  to: elementTo.offsetTop
+  element: document.body,
+  ease: 'easeLinear'
+};
+
+this.scroller.scrollTo(options, callback);
 ```
 
 ##Examples  
@@ -25,10 +31,10 @@ this.scoller.scrollTo(options, callback);
 
 ```js
 //This scroll the element to the offsetToScroll in the required duration with the default ease
-this.scoller.scrollTo({element: document.body, to: 100, duration: 0.6});
+this.scroller.scrollTo({element: document.body, to: 100, duration: 0.6});
 
 //This scroll the element to the offsetToScroll in the required duration with the selected ease and finally execute the callback
-this.scoller.scrollTo({element: document.body, to: 100, duration: 0.6, ease: 'easeOutCubic'}, callback);
+this.scroller.scrollTo({element: document.body, to: 100, duration: 0.6, ease: 'easeOutCubic'}, callback);
 
 ```
 ###ScrollTop  
@@ -36,22 +42,31 @@ this.scoller.scrollTo({element: document.body, to: 100, duration: 0.6, ease: 'ea
 ```js
 
 //This scroll the element to the top in the required duration with the selected ease and finally execute the callback
-this.scoller.scrollTop({element: document.body, duration: 0.6, ease: 'easeOutCubic'}, callback);
+this.scroller.scrollTop({element: document.body, duration: 0.6, ease: 'easeOutCubic'}, callback);
 
 ```
 ###ScrollBottom  
 
 ```js
 //This scroll the element to the bottom in the required duration with the default ease
-this.scoller.scrollBottom({element: document.body, duration: 0.6});
+this.scroller.scrollBottom({element: document.body, duration: 0.6});
 
 ```
 ###ScrollEqual 
 
 ```js
 //If you want to scroll with the same velocity without taking into acount the duration you can use:
-this.scoller.scrollEqual({element: document.body, velocity: 100, to: 100, ease: 'easeOutCubic'});  
+this.scroller.scrollEqual({element: document.body, velocity: 100, to: 100, ease: 'easeOutCubic'});  
 //This is useful if you want the user feel the difference between short and long distances.
+
+```
+
+###ScrollToElement 
+
+```js
+//If you want to scroll to an element without using the offset you can use:
+var element = document.getElementById('elementID');
+this.scroller.scrollToElement({element: document.body, to: element, duration: 0.6, ease: 'easeOutExpo'});
 
 ```
 

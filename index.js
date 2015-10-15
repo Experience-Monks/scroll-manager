@@ -162,6 +162,19 @@ ScrollManager.prototype.scrollEqual = function(options, callback) {
 
 };
 
+ScrollManager.prototype.scrollToElement = function (options, callback) {
+    'use strict';
+    var element = options.element,
+    duration = options.duration,
+    ease = options.ease,
+    offset = options.to;
+
+    offset = offset || {offsetTop: 0};
+
+    this.scrollTo({element: element, duration: duration, to: offset.offsetTop, ease: ease}, callback);
+
+};
+
 ScrollManager.prototype.scrollTo = function (options, callback) {
     'use strict';
     var element = options.element,
