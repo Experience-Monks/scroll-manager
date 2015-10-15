@@ -65,7 +65,7 @@ module.exports = {
         'text': {
           'title':'scrollTo()',
           'summary': 'Scroll with a linear ease',
-          'sourceCode': 'var offset = document.getElementById(\'secondExample\');\n\nvar options = {\n  duration: 0.7,\n  to: offset.\n  element: document.body,\n  ease: \'easeLinear\'\n};\n\nthis.scroller.scrollTo(options);'
+          'sourceCode': 'var offset = document.getElementById(\'secondExample\');\n\nvar options = {\n  duration: 0.7,\n  to: offset.offsetTop\n  element: document.body,\n  ease: \'easeLinear\'\n};\n\nthis.scroller.scrollTo(options);'
         },
         'button': {
           'title': 'Go!',
@@ -86,14 +86,14 @@ module.exports = {
         'text': {
           'title':'scrollTo() + callback',
           'summary': 'Scroll with a ExpoOut ease and execute callback()',
-          'sourceCode': 'var offset = document.getElementById(\'thirdExample\');\n\nvar options = {\n  duration: 1.5,\n  to: offset.\n  element: document.body,\n  ease: \'easeOutExpo\'\n};\n\nthis.scroller.scrollTo(options, callback);'
+          'sourceCode': 'var offset = document.getElementById(\'thirdExample\');\n\nvar options = {\n  duration: 1,\n  to: offset.offsetTop\n  element: document.body,\n  ease: \'easeOutExpo\'\n};\n\nthis.scroller.scrollTo(options, callback);'
         },
         'button': {
           'title': 'Go!',
           'options': {
             'viewName': 'thirdExample',
             'type': 'scrollTo',
-            'duration': 1.5,
+            'duration': 1,
             'element': document.body, 
             'ease': 'easeOutExpo',
             'callback': true
@@ -114,7 +114,7 @@ module.exports = {
           'options': {
             'viewName': 'bottomExample',
             'type': 'scrollBottom',
-            'duration': 1.2,
+            'duration': 0.7,
             'element': document.body, 
             'ease': 'easeInQuad',
             'callback': false
@@ -149,7 +149,7 @@ module.exports = {
         'text': {
           'title':'scrollEqual()',
           'summary': 'Scroll with the same velocity without taking into account the duration of the animation',
-          'sourceCode': 'var offset = document.getElementById(\'forthExample\');\n\nvar options = {\n  velocity: 600,\n  to: offset.\n  element: document.body,\n  ease: \'easeLinear\'\n};\n\nthis.scroller.scrollEqual(options);'
+          'sourceCode': 'var offset = document.getElementById(\'forthExample\');\n\nvar options = {\n  velocity: 600,\n  to: offset.offsetTop\n  element: document.body,\n  ease: \'easeLinear\'\n};\n\nthis.scroller.scrollEqual(options);'
         },
         'button': {
           'title': 'Go!',
@@ -164,19 +164,40 @@ module.exports = {
         }
       }
     },
+    'sixthExample':{
+      'title':'sixthExample',
+      'model':{
+        'text': {
+          'title':'scrollToElement()',
+          'summary': 'Scroll to an element',
+          'sourceCode': 'var toElement = document.getElementById(\'fifthExample\');\n\nvar options = {\n  duration: 0.8,\n  to: toElement\n  element: document.body,\n  ease: \'easeOutExpo\'\n};\n\nthis.scroller.scrollToElement(options, callback);'
+        },
+        'button': {
+          'title': 'Go!',
+          'options': {
+            'viewName': 'fifthExample',
+            'type': 'scrollToElement',
+            'element': document.body,
+            'duration': 0.8,
+            'ease': 'easeLinear',
+            'callback': false
+          }
+        }
+      }
+    },
     'bottomExample':{
       'title':'bottomExample',
       'model':{
         'text': {
           'title':'scrollBottom take you here! :)',
           'summary': 'Go back to another example',
-          'sourceCode': 'var offset = document.getElementById(\'fifthExample\');\n\nvar options = {\n  duration: 1.2,\n  to: offset.\n  element: document.body,\n  ease: \'easeOutExpo\'\n};\n\nthis.scroller.scrollEqual(options);'
+          'sourceCode': 'var offset = document.getElementById(\'sixthExample\');\n\nvar options = {\n  duration: 1.2,\n  to: offset.offsetTop\n  element: document.body,\n  ease: \'easeOutExpo\'\n};\n\nthis.scroller.scrollEqual(options);'
 
         },
         'button': {
           'title': 'Continue!',
           'options': {
-            'viewName': 'fifthExample',
+            'viewName': 'sixthExample',
             'type': 'scrollTo',
             'duration': 1.2,
             'element': document.body, 
@@ -207,7 +228,7 @@ Landing.prototype = {
 	init: function( req, done ) {
 		
 			
-			this.dom = domify(hbs.compile("<div id=\"Landing\">\n  <a href=\"https://github.com/Jam3/scroll-manager\">\n  <img style=\"position: absolute; top: 0; left: 0; border: 0;\" src=\"assets/images/fork-me-on-github.png\" \n  alt=\"Fork me on GitHub\"></a>\n  <div class=\"view-container\">\n    <div id=\"landing\"></div>\n    <div id=\"firstExample\"></div>\n    <div id=\"secondExample\"></div>\n    <div id=\"thirdExample\"></div>\n    <div id=\"forthExample\"></div>\n    <div id=\"fifthExample\"></div>\n    <div id=\"bottomExample\"></div>\n  </div>\n  <div id=\"callback-banner\">\n    <h1 id=\"banner-text\">I´m a callback!!</h1>\n  </div>\n</div>")(model[ req.route ]));
+			this.dom = domify(hbs.compile("<div id=\"Landing\">\n  <a href=\"https://github.com/Jam3/scroll-manager\">\n  <img style=\"position: absolute; top: 0; left: 0; border: 0;\" src=\"assets/images/fork-me-on-github.png\" \n  alt=\"Fork me on GitHub\"></a>\n  <div class=\"view-container\">\n    <div id=\"landing\"></div>\n    <div id=\"firstExample\"></div>\n    <div id=\"secondExample\"></div>\n    <div id=\"thirdExample\"></div>\n    <div id=\"forthExample\"></div>\n    <div id=\"fifthExample\"></div>\n    <div id=\"sixthExample\"></div>\n    <div id=\"bottomExample\"></div>\n  </div>\n  <div id=\"callback-banner\">\n    <h1 id=\"banner-text\">I´m a callback!!</h1>\n  </div>\n</div>")(model[ req.route ]));
 			document.body.appendChild(this.dom);
 
 			var viewContainer = this.dom.getElementsByClassName('view-container')[0];
@@ -460,6 +481,15 @@ ScrollButton.prototype = {
           this.scroller.scrollTo(this.options, this.callbackRoute(this.viewName));
         }
         break;
+      case 'scrollToElement':
+        this.options.to = offset;
+        this.options.duration = this.model.options.duration;
+        if(this.model.options.callback){
+          this.scroller.scrollToElement(this.options, this.callback.bind(this));
+        }else{
+          this.scroller.scrollToElement(this.options, this.callbackRoute(this.viewName));
+        }
+      break;
       case 'scrollTop':
         this.options.duration = this.model.options.duration;
         if(this.model.options.callback){
@@ -13012,6 +13042,19 @@ ScrollManager.prototype.scrollEqual = function(options, callback) {
     var duration = Math.abs(to - from) / velocity;
 
     this.scrollTo({element: element, duration: duration, to: to, ease: ease}, callback);
+
+};
+
+ScrollManager.prototype.scrollToElement = function (options, callback) {
+    'use strict';
+    var element = options.element,
+    duration = options.duration,
+    ease = options.ease,
+    offset = options.to;
+
+    offset = offset || {offsetTop: 0};
+
+    this.scrollTo({element: element, duration: duration, to: offset.offsetTop, ease: ease}, callback);
 
 };
 
