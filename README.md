@@ -27,6 +27,16 @@ this.scroller.scrollTo(options, callback);
 ```
 
 ##Examples  
+
+###ScrollToElement 
+
+```js
+//If you want to scroll to an element without using the offset you can use:
+var element = document.getElementById('elementID');
+this.scroller.scrollToElement({element: document.body, to: element, duration: 0.6, ease: 'easeOutExpo'});
+
+```
+
 ###ScrollTo  
 
 ```js
@@ -58,15 +68,6 @@ this.scroller.scrollBottom({element: document.body, duration: 0.6});
 //If you want to scroll with the same velocity without taking into acount the duration you can use:
 this.scroller.scrollEqual({element: document.body, velocity: 100, to: 100, ease: 'easeOutCubic'});  
 //This is useful if you want the user feel the difference between short and long distances.
-
-```
-
-###ScrollToElement 
-
-```js
-//If you want to scroll to an element without using the offset you can use:
-var element = document.getElementById('elementID');
-this.scroller.scrollToElement({element: document.body, to: element, duration: 0.6, ease: 'easeOutExpo'});
 
 ```
 
