@@ -47,6 +47,12 @@ this.scroller.scrollTo({element: document.body, to: 100, duration: 0.6});
 this.scroller.scrollTo({element: document.body, to: 100, duration: 0.6, ease: 'easeOutCubic'}, callback);
 
 ```
+####Horizontal
+```js
+//You also can use the method scrollTo to scroll horizontal in the element, you only need to set the direction  
+this.scroller.scrollTo({direction:'horizontal', element: document.body, to: 100, duration: 0.6, ease: 'easeOutCubic'}, callback);
+
+```
 ###ScrollTop  
 
 ```js
@@ -60,6 +66,22 @@ this.scroller.scrollTop({element: document.body, duration: 0.6, ease: 'easeOutCu
 ```js
 //This scroll the element to the bottom in the required duration with the default ease
 this.scroller.scrollBottom({element: document.body, duration: 0.6});
+
+```
+
+###ScrollRight  
+
+```js
+
+//This scroll the element to the right of an element in the required duration with the selected ease and finally execute the callback
+this.scroller.ScrollRight({element: document.body, duration: 0.6, ease: 'easeOutCubic'}, callback);
+
+```
+###ScrollLeft  
+
+```js
+//This scroll the element to the left of an element in the required duration with the default ease
+this.scroller.ScrollLeft({element: document.body, duration: 0.6});
 
 ```
 ###ScrollEqual 

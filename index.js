@@ -174,13 +174,13 @@ ScrollManager.prototype.scrollEqual = function(options, callback) {
     'use strict';
     var element = options.element,
     velocity = options.velocity,
+    direction = options.direction,
     to = options.to,
-    ease = options.ease,
-    from = element.scrollTop;
-
+    ease = options.ease;
+    var from = (direction === 'horizontal') ? element.scrollLeft: element.scrollTop;
     var duration = Math.abs(to - from) / velocity;
 
-    this.scrollTo({element: element, duration: duration, to: to, ease: ease}, callback);
+    this.scrollTo({element: element, direction: direction, duration: duration, to: to, ease: ease}, callback);
 
 };
 
