@@ -132,7 +132,7 @@ ScrollManager.prototype.scrollTop = function (options, callback) {
     duration = options.duration,
     ease = options.ease;
 
-    this.scrollTo({element: element, duration: duration, to: 0, ease: ease}, callback);
+    this.scrollTo({element: element, duration: duration, direction:'vertical', to: 0, ease: ease}, callback);
 
 };
 
@@ -144,7 +144,29 @@ ScrollManager.prototype.scrollBottom = function (options, callback) {
 
     var height = parseInt(window.getComputedStyle(element).height);
 
-    this.scrollTo({element: element, duration: duration, to: height, ease: ease}, callback);
+    this.scrollTo({element: element, duration: duration, direction:'vertical', to: height, ease: ease}, callback);
+
+};
+
+ScrollManager.prototype.scrollLeft = function (options, callback) {
+    'use strict';
+    var element = options.element,
+    duration = options.duration,
+    ease = options.ease;
+
+    this.scrollTo({element: element, duration: duration, direction:'horizontal', to: 0, ease: ease}, callback);
+
+};
+
+ScrollManager.prototype.scrollRight = function (options, callback) {
+    'use strict';
+    var element = options.element,
+    duration = options.duration,
+    ease = options.ease;
+
+    var width = parseInt(window.getComputedStyle(element).width);
+
+    this.scrollTo({element: element, duration: duration, direction:'horizontal', to: width, ease: ease}, callback);
 
 };
 
@@ -180,10 +202,11 @@ ScrollManager.prototype.scrollTo = function (options, callback) {
     var element = options.element,
     to = options.to,
     duration = options.duration,
+    direction = options.direction,
     ease = options.ease;
 
-    var start = element.scrollTop,
-    change = to - start;
+    var start = (direction === 'horizontal') ? element.scrollLeft: element.scrollTop;
+    var change = to - start;
     var startTime = new Date();
 
     if (!ease) {
@@ -192,23 +215,37 @@ ScrollManager.prototype.scrollTo = function (options, callback) {
 
     var easeFunction = selectEase(ease);
     var elapsedTime = 0;
-
-    var animate = function () {
-      'use strict';
-      var currentTime = new Date();
-      elapsedTime = (currentTime.getTime() - startTime.getTime()) / 1000;
-      var position = easeFunction(elapsedTime, start, change, duration);
-      element.scrollTop = position; 
-
-      if (elapsedTime < duration) {
-        id = raf(animate);
-      } else {
-        if (callback) {
-          callback();
-        } 
-      }
-    }.bind(this);
-
+    
+    var animate;
+    if (direction === 'horizontal') {
+      animate = function () {
+        var currentTime = new Date();
+        elapsedTime = (currentTime.getTime() - startTime.getTime()) / 1000;
+        var position = easeFunction(elapsedTime, start, change, duration);
+        element.scrollLeft = position; 
+        if (elapsedTime < duration) {
+          id = raf(animate);
+        } else {
+          if (callback) {
+            callback();
+          } 
+        }
+      }.bind(this);
+    } else {
+      animate = function () {
+        var currentTime = new Date();
+        elapsedTime = (currentTime.getTime() - startTime.getTime()) / 1000;
+        var position = easeFunction(elapsedTime, start, change, duration);
+        element.scrollTop = position; 
+        if (elapsedTime < duration) {
+          id = raf(animate);
+        } else {
+          if (callback) {
+            callback();
+          } 
+        }
+      }.bind(this);
+    }
     id = raf(animate);
 };
 
