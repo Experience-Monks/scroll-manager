@@ -13201,6 +13201,11 @@ var selectEase = function(ease){
   }
 };
 
+var isBody = function(el) {
+  return document.body === el;
+};
+
+
 ScrollManager.prototype.scrollTop = function (options, callback) {
     'use strict';
     var element = options.element,
@@ -13217,11 +13222,7 @@ ScrollManager.prototype.scrollBottom = function (options, callback) {
     duration = options.duration,
     ease = options.ease;
 
-    var body = document.body,
-        html = document.documentElement;
-
-    var height = Math.max( body.scrollHeight, body.offsetHeight, 
-                           html.clientHeight, html.scrollHeight, html.offsetHeight );
+    var height = parseInt(window.getComputedStyle(element).height);
 
     this.scrollTo({element: element, duration: duration, direction:'vertical', to: height, ease: ease}, callback);
 
@@ -13283,6 +13284,12 @@ ScrollManager.prototype.scrollTo = function (options, callback) {
     duration = options.duration,
     direction = options.direction,
     ease = options.ease;
+    if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {  
+      if (isBody(element)) {
+        element = element.parentElement;
+      }
+    }
+
 
     var start = (direction === 'horizontal') ? element.scrollLeft: element.scrollTop;
     var change = to - start;
