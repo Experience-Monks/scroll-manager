@@ -96,30 +96,30 @@ var selectEase = function(ease){
   'use strict';
   switch (ease) {
     case 'easeLinear':
-      return easeLinear; 
-    case 'easeInQuad': 
+      return easeLinear;
+    case 'easeInQuad':
       return easeInQuad;
-    case 'easeOutQuad': 
+    case 'easeOutQuad':
       return easeOutQuad;
-    case 'easeInOutQuad': 
+    case 'easeInOutQuad':
       return easeInOutQuad;
-    case 'easeInCubic': 
+    case 'easeInCubic':
       return easeInCubic;
-    case 'easeOutCubic': 
+    case 'easeOutCubic':
       return easeOutCubic;
-    case 'easeInOutCubic': 
+    case 'easeInOutCubic':
       return easeInOutCubic;
-    case 'easeInExpo': 
+    case 'easeInExpo':
       return easeInExpo;
-    case 'easeOutExpo': 
+    case 'easeOutExpo':
       return easeOutExpo;
-    case 'easeInOutExpo': 
+    case 'easeInOutExpo':
       return easeInOutExpo;
-    case 'easeInCirc': 
+    case 'easeInCirc':
       return easeInCirc;
-    case 'easeOutCirc': 
+    case 'easeOutCirc':
       return easeOutCirc;
-    case 'easeInOutCirc': 
+    case 'easeInOutCirc':
       return easeInOutCirc;
     default:
       return easeLinear;
@@ -209,7 +209,7 @@ ScrollManager.prototype.scrollTo = function (options, callback) {
     duration = options.duration,
     direction = options.direction,
     ease = options.ease;
-    if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {  
+    if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
       if (isBody(element)) {
         element = element.parentElement;
       }
@@ -226,20 +226,27 @@ ScrollManager.prototype.scrollTo = function (options, callback) {
 
     var easeFunction = selectEase(ease);
     var elapsedTime = 0;
-    
+    var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+
     var animate;
     if (direction === 'horizontal') {
       animate = function () {
         var currentTime = new Date();
         elapsedTime = (currentTime.getTime() - startTime.getTime()) / 1000;
         var position = easeFunction(elapsedTime, start, change, duration);
-        element.scrollLeft = position; 
+
+        if (isChrome) {
+            window.scrollTo(position, 0)
+        } else {
+            element.scrollLeft = position;
+        }
+        
         if (elapsedTime < duration) {
           id = raf(animate);
         } else {
           if (callback) {
             callback();
-          } 
+          }
         }
       }.bind(this);
     } else {
@@ -247,13 +254,19 @@ ScrollManager.prototype.scrollTo = function (options, callback) {
         var currentTime = new Date();
         elapsedTime = (currentTime.getTime() - startTime.getTime()) / 1000;
         var position = easeFunction(elapsedTime, start, change, duration);
-        element.scrollTop = position; 
+
+        if (isChrome) {
+            window.scrollTo(0, position)
+        } else {
+            element.scrollTop = position;
+        }
+
         if (elapsedTime < duration) {
           id = raf(animate);
         } else {
           if (callback) {
             callback();
-          } 
+          }
         }
       }.bind(this);
     }
