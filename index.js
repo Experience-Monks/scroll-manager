@@ -222,10 +222,9 @@ ScrollManager.prototype.scrollTo = function (options, callback) {
     var start;
 
     if (isChrome) {
-        start = (direction === 'horizontal') ? element.scrollLeft: element.scrollTop;
-
-    } else {
         start = (direction === 'horizontal') ? window.scrollX: window.scrollY;
+    } else {
+        start = (direction === 'horizontal') ? element.scrollLeft: element.scrollTop;
     }
     var change = to - start;
     var startTime = new Date();
