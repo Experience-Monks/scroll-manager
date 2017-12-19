@@ -1,10 +1,11 @@
 var raf = require('raf');
-var id = 0;
+
 function ScrollManager () {
   'use strict';
   if (!(this instanceof ScrollManager)){
     return new ScrollManager();
   }
+  this.id = 0;
 }
 
 var easeLinear = function (currentTime, start, change, duration) {
@@ -209,14 +210,23 @@ ScrollManager.prototype.scrollTo = function (options, callback) {
     duration = options.duration,
     direction = options.direction,
     ease = options.ease;
+    var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+
+
     if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
       if (isBody(element)) {
         element = element.parentElement;
       }
     }
 
+    var start;
 
-    var start = (direction === 'horizontal') ? element.scrollLeft: element.scrollTop;
+    if (isChrome) {
+        start = (direction === 'horizontal') ? element.scrollLeft: element.scrollTop;
+
+    } else {
+        start = (direction === 'horizontal') ? window.scrollX: window.scrollY;
+    }
     var change = to - start;
     var startTime = new Date();
 
@@ -226,7 +236,6 @@ ScrollManager.prototype.scrollTo = function (options, callback) {
 
     var easeFunction = selectEase(ease);
     var elapsedTime = 0;
-    var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
 
     var animate;
     if (direction === 'horizontal') {
@@ -236,13 +245,13 @@ ScrollManager.prototype.scrollTo = function (options, callback) {
         var position = easeFunction(elapsedTime, start, change, duration);
 
         if (isChrome) {
-            window.scrollTo(position, 0)
+            window.scrollTo(position, 0);
         } else {
             element.scrollLeft = position;
         }
-        
+
         if (elapsedTime < duration) {
-          id = raf(animate);
+          this.id = raf(animate);
         } else {
           if (callback) {
             callback();
@@ -256,13 +265,13 @@ ScrollManager.prototype.scrollTo = function (options, callback) {
         var position = easeFunction(elapsedTime, start, change, duration);
 
         if (isChrome) {
-            window.scrollTo(0, position)
+            window.scrollTo(0, position);
         } else {
             element.scrollTop = position;
         }
 
         if (elapsedTime < duration) {
-          id = raf(animate);
+          this.id = raf(animate);
         } else {
           if (callback) {
             callback();
@@ -270,7 +279,7 @@ ScrollManager.prototype.scrollTo = function (options, callback) {
         }
       }.bind(this);
     }
-    id = raf(animate);
+    this.id = raf(animate);
 };
 
 module.exports = ScrollManager;
